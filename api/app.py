@@ -15,11 +15,12 @@ log.setLevel(logging.ERROR)
 
 option_a = os.getenv('OPTION_A', "Cats")
 option_b = os.getenv('OPTION_B', "Dogs")
-db_hostname = 'postgres'
-db_database = os.getenv('PGDATABASE')
-db_password = os.getenv('PGPASSWORD')
-db_user = os.getenv('PGUSER')
+db_hostname = os.getenv('PGHOSTNAME', 'db-seed.c762uok2ezvw.ap-south-1.rds.amazonaws.com')
+db_database = os.getenv('PGDATABASE', 'postgres')
+db_password = os.getenv('PGPASSWORD', 'motherindia123')
+db_user = os.getenv('PGUSER', 'postgres')
 hostname = socket.gethostname()
+sslrootcert = "./ap-south-1-bundle.pem"
 
 app = Flask(__name__)
 CORS(app)
@@ -43,7 +44,7 @@ def hello():
 def get_votes():
     print("Getting votes")
 
-    conn = psycopg2.connect( host=db_hostname, user=db_user, password=db_password, dbname=db_database)
+    conn = psycopg2.connect( host=db_hostname, user=db_user, password=db_password, dbname=db_database, sslmode='verify-full',sslrootcert=sslrootcert)
     cur = conn.cursor()
     cur.execute("SELECT vote, COUNT(id) AS count FROM votes GROUP BY vote")
     res = cur.fetchall()
@@ -67,7 +68,7 @@ def post_vote():
         print("received vote request for '%s' from voter id: '%s'" % (vote, voter_id))
         sys.stdout.flush()
 
-        conn = psycopg2.connect( host=db_hostname, user=db_user, password=db_password, dbname=db_database)
+        conn = psycopg2.connect( host=db_hostname, user=db_user, password=db_password, dbname=db_database, sslmode='verify-full',sslrootcert=sslrootcert)
         query = "INSERT INTO votes (id, vote, created_at) VALUES (%s, %s, NOW())"
         queryParams = (voter_id, vote)
         cur = conn.cursor()
