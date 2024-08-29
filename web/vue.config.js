@@ -5,7 +5,7 @@ module.exports = {
     progress: false,
     proxy: {
       '^/api': {
-        target: 'http://localhost:8080',
+        target: process.env.API_SERVER_URL ? process.env.API_SERVER_URL: 'http://localhost:8080' ,
         changeOrigin: true,
         secure: false,
         logLevel: 'debug',
