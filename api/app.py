@@ -15,9 +15,9 @@ log.setLevel(logging.ERROR)
 
 option_a = os.getenv('OPTION_A', "Cats")
 option_b = os.getenv('OPTION_B', "Dogs")
-db_hostname = os.getenv('PGHOSTNAME', 'db-seed.c762uok2ezvw.ap-south-1.rds.amazonaws.com')
+db_hostname = os.getenv('PGHOSTNAME', 'db-ma.ch0uy20yozxm.ap-south-1.rds.amazonaws.com')
 db_database = os.getenv('PGDATABASE', 'postgres')
-db_password = os.getenv('PGPASSWORD', 'motherindia123')
+db_password = os.getenv('PGPASSWORD', 'postgres')
 db_user = os.getenv('PGUSER', 'postgres')
 hostname = socket.gethostname()
 sslrootcert = "./ap-south-1-bundle.pem"
